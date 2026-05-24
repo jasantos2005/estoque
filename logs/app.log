@@ -5067,3 +5067,4 @@ INFO:     172.69.39.25:0 - "GET /api/planos/produtos/buscar?q=398 HTTP/1.0" 200 
 INFO:     172.69.39.25:0 - "POST /api/planos/13/grupos HTTP/1.0" 200 OK
 INFO:     172.69.39.25:0 - "GET /api/planos/13/completo HTTP/1.0" 200 OK
 INFO:     172.69.39.25:0 - "GET /api/planos/ HTTP/1.0" 200 OK
+INFO:     104.22.10.192:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
