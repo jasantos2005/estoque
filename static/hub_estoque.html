@@ -1509,7 +1509,15 @@ async function carregarSugestao() {
       tbody.innerHTML = '<tr><td colspan="8" class="empty"><div class="ei">✅</div><p>Nenhum item em ruptura. Estoque saudável!</p></td></tr>';
       return;
     }
-    tbody.innerHTML = itensSugCache.map(it => `<tr>
+    // Filtrar por categoria se selecionada
+    const catFiltro = document.getElementById('fb-categoria') ? document.getElementById('fb-categoria').value : '';
+    const itensFiltrados = catFiltro ? itensSugCache.filter(it => it.categoria && it.categoria.toUpperCase() === catFiltro.toUpperCase()) : itensSugCache;
+    total.textContent = itensFiltrados.length + ' itens';
+    if (!itensFiltrados.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty"><div class="ei">✅</div><p>Nenhum item encontrado para esta categoria.</p></td></tr>';
+      return;
+    }
+    tbody.innerHTML = itensFiltrados.map(it => `<tr>
       <td><input type="checkbox" class="sug-check" value="${it.id_produto}" style="accent-color:var(--cyan);width:14px;height:14px;" onchange="toggleSugItem(this)"></td>
       <td style="color:var(--text3);font-size:11px;">${esc(it.id_produto)}</td>
       <td><div class="td-name" style="cursor:pointer;color:var(--cyan);" onclick="verHistoricoProduto('${it.id_produto}','${esc(it.descricao)}')">${esc(it.descricao)}</div></td>
@@ -2000,13 +2008,18 @@ async function exportarCSV() {
   const pg = document.querySelector('.page.active');
   if (!pg) return;
   const id = pg.id.replace('page-', '');
+  const map = {'casa': 'casa/excel', 'infra': 'infra/excel', 'dashboard': 'todos/excel'};
+  const endpoint = map[id];
+  if (!endpoint) { toast('Export não disponível para esta página', 'err'); return; }
   try {
-    const r = await fetch(`${API}/api/estoque/${id}/csv?de=${dataIni}&ate=${dataFim}`, { headers: { Authorization: `Bearer ${token}` } });
-    if (!r.ok) { toast('Export não disponível para esta página', 'err'); return; }
+    toast('Gerando Excel...', 'ok');
+    const r = await fetch(`${API}/api/estoque/${endpoint}?de=${dataIni}&ate=${dataFim}`, { headers: { Authorization: `Bearer ${token}` } });
+    if (!r.ok) { toast('Erro ao gerar Excel', 'err'); return; }
     const blob = await r.blob();
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = `${id}_${dataIni}.csv`; a.click();
-    toast('CSV exportado!', 'ok');
+    const nomes = {'casa': 'estoque_casa', 'infra': 'estoque_infra', 'dashboard': 'estoque_completo'};
+    const a = document.createElement('a'); a.href = url; a.download = `${nomes[id]}.xlsx`; a.click();
+    toast('Excel exportado!', 'ok');
   } catch (e) { toast('Erro ao exportar', 'err'); }
 }
 
@@ -2033,6 +2046,7 @@ function toast(msg, tipo = '') {
 
 // ── PROJEÇÃO DE COMPRAS ───────────────────────────────────────
 let projecaoMeses = 1;
+let projecaoFiltroStatus = "";
 let projecaoCache = [];
 let projSelecionados = new Set();
 
@@ -2048,6 +2062,10 @@ async function carregarProjecao() {
   }
 }
 
+function setProjecaoFiltro(status) {
+  projecaoFiltroStatus = projecaoFiltroStatus === status ? '' : status;
+  renderProjecao();
+}
 function setProjecao(meses, el) {
   projecaoMeses = meses;
   document.querySelectorAll('#proj-tabs .ftab').forEach(t => t.classList.remove('on'));
@@ -2061,6 +2079,8 @@ function renderProjecao() {
   const dias = projecaoMeses * 30;
   let itens = projecaoCache.filter(i => i.consumo_dia > 0);
   if (cat) itens = itens.filter(i => (i.categoria||'') === cat);
+  if (projecaoFiltroStatus === 'comprar') itens = itens.filter(i => Math.max(0, i.consumo_dia * dias - i.saldo) > 0);
+  if (projecaoFiltroStatus === 'ok') itens = itens.filter(i => Math.max(0, i.consumo_dia * dias - i.saldo) === 0);
 
   // KPIs
   const totalComprar = itens.reduce((s, i) => {
@@ -2077,12 +2097,12 @@ function renderProjecao() {
       <div class="kl">Período projetado</div>
       <div class="ks">${dias} dias de cobertura</div>
     </div>
-    <div class="kpi" style="--ac:var(--amber)">
+    <div class="kpi" style="--ac:var(--amber);cursor:pointer;outline:${projecaoFiltroStatus==='comprar'?'2px solid var(--amber)':'none'}" onclick="setProjecaoFiltro('comprar')">
       <div class="kv">${itensComprar}</div>
       <div class="kl">Itens a comprar</div>
-      <div class="ks">saldo insuficiente</div>
+      <div class="ks">saldo insuficiente ${projecaoFiltroStatus==='comprar'?'✓':''}</div>
     </div>
-    <div class="kpi" style="--ac:var(--green)">
+    <div class="kpi" style="--ac:var(--green);cursor:pointer;outline:${projecaoFiltroStatus==='ok'?'2px solid var(--green)':'none'}" onclick="setProjecaoFiltro('ok')">
       <div class="kv">${itensOk}</div>
       <div class="kl">Itens suficientes</div>
       <div class="ks">saldo cobre o período</div>

@@ -5068,3 +5068,421 @@ INFO:     172.69.39.25:0 - "POST /api/planos/13/grupos HTTP/1.0" 200 OK
 INFO:     172.69.39.25:0 - "GET /api/planos/13/completo HTTP/1.0" 200 OK
 INFO:     172.69.39.25:0 - "GET /api/planos/ HTTP/1.0" 200 OK
 INFO:     104.22.10.192:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     104.23.168.96:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.70.144.68:0 - "GET /favicon.ico HTTP/1.0" 404 Not Found
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.171:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.71.239.121:0 - "GET /wp-content/plugins/hellopress/wp_filemanager.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /public/wp-blog.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-blog.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /casp1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ws78.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /koiy.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-png.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /xa.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /press.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ws88.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wxfyf.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-blog-header.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /sa.php7 HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /public/ws49.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /inputs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /xxw.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /amwxl.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-admin/css/bolt.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ws83.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /amax.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /zc-104.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /grsiuk.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp9.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /aevly.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ioxi-o.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /5b9ac.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /tool.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-the.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wtiiy.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /init.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp5.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /jga.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /gifclass.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ajax.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /tx78.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /csv.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /n3yUmQ6Q9xwQ8ocdefault.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ne2026.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-act.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ws86.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /asd.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /torsa1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /a4.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /myfile.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /as.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /cu.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /100.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /666.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /saorix1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /packsin1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /menu.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /admin-footer.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /shop.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /maul.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /wp-blogs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /bjfl.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /xltt.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /lowpr.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /term.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /fs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ortasekerli1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /ws80.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /gk.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /varb.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /public/mI35rZhMg1zJ1vuXdefault.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /classwithtostring.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /uuu.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /wp-good.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /cilus.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /edit.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ws60.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /rzki.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /jp.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /G-In.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /public/file.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /bolt.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /dass.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ws85.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /buc.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /gptsh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /wmore1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /a5.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET //nw.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /155.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /hots.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /install.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /sadcut1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /users.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /wp-p2r3q9c8k4.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /xwx1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ox.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /sid3.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /drhunthq.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /s.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /clss.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /mh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /wen.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /Sanskrit.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /gettest.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /bfil.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ww.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /byypas.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ms-edit.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ws87.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /aa21.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /okxh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /6kDPjgFTmvS.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /fsjzs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /sale.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /t00l.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /wziar1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /lib.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /222.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /kj.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /amp.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /bo.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /zc-243.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /ws81.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /callback.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /sd.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /gpt-sh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.239.122:0 - "GET /domains.php HTTP/1.0" 404 Not Found
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.71.235.36:0 - "GET /wp-content/plugins/hellopress/wp_filemanager.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /public/wp-blog.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-blog.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /casp1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws78.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /koiy.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-png.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /xa.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /press.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws88.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wxfyf.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-blog-header.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /sa.php7 HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /public/ws49.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /inputs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /xxw.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /amwxl.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-admin/css/bolt.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws83.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /amax.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /zc-104.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /grsiuk.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp9.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /aevly.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ioxi-o.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /5b9ac.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /tool.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-the.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wtiiy.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /init.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp5.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /jga.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /gifclass.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ajax.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /tx78.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /csv.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /n3yUmQ6Q9xwQ8ocdefault.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ne2026.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-act.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws86.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /asd.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /torsa1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /a4.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /myfile.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /as.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /cu.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /100.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /666.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /saorix1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /packsin1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /menu.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /admin-footer.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /shop.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /maul.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-blogs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /bjfl.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /xltt.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /lowpr.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /term.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /fs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ortasekerli1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws80.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /gk.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /varb.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /public/mI35rZhMg1zJ1vuXdefault.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /classwithtostring.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /uuu.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-good.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /cilus.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /edit.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws60.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /rzki.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /jp.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /G-In.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /public/file.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /bolt.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /dass.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws85.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /buc.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /gptsh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wmore1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /a5.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET //nw.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /155.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /hots.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /install.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /sadcut1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /users.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wp-p2r3q9c8k4.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /xwx1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ox.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /sid3.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /drhunthq.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /s.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /clss.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /mh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wen.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /Sanskrit.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /gettest.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /bfil.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ww.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /byypas.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ms-edit.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws87.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /aa21.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /okxh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /6kDPjgFTmvS.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /fsjzs.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /sale.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /t00l.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /wziar1.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /lib.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /222.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /kj.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /amp.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /bo.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /zc-243.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /ws81.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /callback.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /sd.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /gpt-sh.php HTTP/1.0" 404 Not Found
+INFO:     172.71.235.36:0 - "GET /domains.php HTTP/1.0" 404 Not Found
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.171:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.171:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-24 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/infra?de=2026-05-01&ate=2026-05-24 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-24 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/casa/csv?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 500 Internal Server Error
+INFO:     172.69.91.27:0 - "GET /api/estoque/casa/csv?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 500 Internal Server Error
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/casa/csv?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 500 Internal Server Error
+INFO:     172.64.222.197:0 - "GET /api/estoque/casa/csv?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 500 Internal Server Error
+INFO:     172.64.222.197:0 - "GET /api/estoque/casa/csv?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 500 Internal Server Error
+INFO:     172.64.222.197:0 - "GET /api/estoque/infra?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/infra/csv?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 500 Internal Server Error
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.68.14.170:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.68.14.170:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.68.14.170:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.68.14.170:0 - "GET /api/estoque/casa/excel?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/casa/excel?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/infra?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/movimentacoes?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/infra?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.68.14.171:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.68.14.171:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.68.14.171:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.19.47:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/compras/projecao-ativacoes?ativacoes=100 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.69.11.168:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     104.23.254.196:0 - "GET / HTTP/1.0" 200 OK
+INFO:     104.23.254.196:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     104.23.254.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     104.23.254.196:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.69.11.169:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     104.23.254.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.34.141:0 - "GET /.git/config HTTP/1.0" 404 Not Found
+INFO:     172.70.206.29:0 - "GET /.env.development HTTP/1.0" 404 Not Found
+INFO:     172.69.34.208:0 - "GET /.env.backup HTTP/1.0" 404 Not Found
+INFO:     172.70.206.29:0 - "GET /appsettings.json HTTP/1.0" 404 Not Found
+INFO:     172.70.214.87:0 - "GET /robots.txt HTTP/1.0" 404 Not Found
+INFO:     104.23.251.194:0 - "GET /config.json HTTP/1.0" 404 Not Found
+INFO:     162.158.186.147:0 - "GET /account.json HTTP/1.0" 404 Not Found
+INFO:     162.158.90.66:0 - "GET /actuator/env HTTP/1.0" 404 Not Found
+INFO:     162.158.186.147:0 - "GET /secrets.json HTTP/1.0" 404 Not Found
+INFO:     172.70.207.146:0 - "GET /google-credentials.json HTTP/1.0" 404 Not Found
+INFO:     172.70.214.98:0 - "GET /firebase-adminsdk.json HTTP/1.0" 404 Not Found
+INFO:     162.158.90.67:0 - "GET /key.json HTTP/1.0" 404 Not Found
+INFO:     104.23.251.195:0 - "GET /keyfile.json HTTP/1.0" 404 Not Found
+INFO:     172.64.217.66:0 - "GET /firebase.json HTTP/1.0" 404 Not Found
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     104.22.10.192:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized

@@ -503,3 +503,108 @@ def relatorio_consumo(de: str = "", ate: str = "", categoria: str = "", authoriz
         } for r in rows],
         "total": len(rows)
     }
+
+# ── EXPORT EXCEL ─────────────────────────────────────────────────────────────
+def _gerar_excel(itens, nome: str):
+    from fastapi.responses import StreamingResponse
+    import openpyxl
+    from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
+    import io, datetime
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = nome[:31]
+
+    # Estilos
+    header_fill = PatternFill("solid", fgColor="1C2330")
+    header_font = Font(bold=True, color="00D4FF", size=10)
+    alt_fill = PatternFill("solid", fgColor="161B22")
+    normal_fill = PatternFill("solid", fgColor="0F1117")
+    border = Border(bottom=Side(style='thin', color="2D3748"))
+
+    # Cabeçalho
+    headers = ["ID", "Descrição", "Categoria", "Unidade", "Saldo", "Saída 90d", "Cons./Dia", "Cobertura (dias)", "Est.Min", "Status"]
+    ws.append(headers)
+    for cell in ws[1]:
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = Alignment(horizontal='center')
+
+    # Larguras
+    ws.column_dimensions['A'].width = 8
+    ws.column_dimensions['B'].width = 55
+    ws.column_dimensions['C'].width = 12
+    ws.column_dimensions['D'].width = 8
+    ws.column_dimensions['E'].width = 12
+    ws.column_dimensions['F'].width = 12
+    ws.column_dimensions['G'].width = 12
+    ws.column_dimensions['H'].width = 16
+    ws.column_dimensions['I'].width = 10
+    ws.column_dimensions['J'].width = 12
+
+    status_colors = {"CRÍTICO": "FF4D6A", "ALERTA": "FFB83F", "NORMAL": "00E5A0", "SEM MOVIMENTO": "64748B"}
+
+    for i, item in enumerate(itens):
+        saldo = float(item.get("saldo", 0))
+        saida = float(item.get("saida_periodo", 0))
+        cons_dia = round(saida / 90, 2) if saida else 0
+        cobertura = round(saldo / cons_dia) if cons_dia > 0 else 999
+        est_min = float(item.get("estoque_minimo", 0))
+
+        if saldo <= 0: status = "SEM MOVIMENTO"
+        elif cons_dia > 0 and cobertura <= 15: status = "CRÍTICO"
+        elif cons_dia > 0 and cobertura <= 30: status = "ALERTA"
+        else: status = "NORMAL"
+
+        row = [
+            item.get("id_produto", ""),
+            item.get("descricao", ""),
+            item.get("categoria", ""),
+            item.get("unidade", ""),
+            saldo,
+            saida,
+            cons_dia,
+            cobertura if cobertura < 999 else "∞",
+            est_min,
+            status
+        ]
+        ws.append(row)
+
+        fill = alt_fill if i % 2 == 0 else normal_fill
+        for cell in ws[i+2]:
+            cell.fill = fill
+            cell.font = Font(color="E2E8F0", size=10)
+            cell.border = border
+
+        # Colorir status
+        status_cell = ws.cell(row=i+2, column=10)
+        cor = status_colors.get(status, "E2E8F0")
+        status_cell.font = Font(color=cor, bold=True, size=10)
+
+    # Rodapé
+    ws.append([])
+    ws.append([f"Gerado em: {datetime.datetime.now().strftime('%d/%m/%Y %H:%M')}"])
+
+    buf = io.BytesIO()
+    wb.save(buf)
+    buf.seek(0)
+    return StreamingResponse(
+        buf,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": f"attachment; filename={nome}.xlsx"}
+    )
+
+@router.get("/casa/excel")
+def excel_casa(de: str = "", ate: str = "", authorization: str = Header("")):
+    verificar_token(authorization)
+    return _gerar_excel(get_itens("%CASA%", de, ate), "estoque_casa")
+
+@router.get("/infra/excel")
+def excel_infra(de: str = "", ate: str = "", authorization: str = Header("")):
+    verificar_token(authorization)
+    return _gerar_excel(get_itens("%INFRA%", de, ate), "estoque_infra")
+
+@router.get("/todos/excel")
+def excel_todos(de: str = "", ate: str = "", authorization: str = Header("")):
+    verificar_token(authorization)
+    return _gerar_excel(get_itens("%%", de, ate), "estoque_completo")
