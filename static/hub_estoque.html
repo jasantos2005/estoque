@@ -396,6 +396,10 @@ body.light-mode{--bg:#f0f2f7;--surf:#ffffff;--surf2:#e8ebf2;--surf3:#dde1ec;--bo
       </div>
 
       <div class="sb-group-label">SISTEMA</div>
+      <div class="ni" id="ni-exec" onclick="navTo('exec')">
+        <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg>
+        <span class="ni-label">Dashboard Exec</span>
+      </div>
       <div class="ni" id="ni-requisicoes" onclick="navTo('requisicoes')">
         <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 11l3 3L22 4'/><path d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/></svg>
         <span class="ni-label">Requisições</span>
@@ -981,6 +985,39 @@ body.light-mode{--bg:#f0f2f7;--surf:#ffffff;--surf2:#e8ebf2;--surf3:#dde1ec;--bo
   </div>
 </div>
 
+
+<div id="page-exec" class="page">
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi" style="--ac:var(--cyan)"><div class="kv" id="ex-inst">—</div><div class="kl">Instalações semana</div><div class="ki">🔧</div></div>
+    <div class="kpi" style="--ac:var(--green)"><div class="kv" id="ex-req-ok">—</div><div class="kl">Requisições aprovadas</div><div class="ki">✅</div></div>
+    <div class="kpi" style="--ac:var(--amber)"><div class="kv" id="ex-req-pend">—</div><div class="kl">Requisições pendentes</div><div class="ki">⏳</div></div>
+    <div class="kpi" style="--ac:var(--purple)"><div class="kv" id="ex-acuracia">—</div><div class="kl">Acurácia agentes</div><div class="ki">🎯</div></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="card" style="padding:16px">
+      <div class="sec-hd" style="margin-bottom:12px"><span class="sec-title">👤 Requisições por técnico</span></div>
+      <div id="ex-por-tecnico"></div>
+    </div>
+    <div class="card" style="padding:16px">
+      <div class="sec-hd" style="margin-bottom:12px"><span class="sec-title">📦 Produtos mais requisitados</span></div>
+      <div id="ex-top-produtos"></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:16px">
+    <div class="sec-hd" style="margin-bottom:12px">
+      <span class="sec-title">📅 Histórico de requisições</span>
+      <select id="ex-filtro-dias" class="fb-select" onchange="carregarDashExec()">
+        <option value="7">7 dias</option>
+        <option value="15">15 dias</option>
+        <option value="30">30 dias</option>
+      </select>
+    </div>
+    <div id="ex-historico"></div>
+  </div>
+</div>
+
 </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /shell -->
@@ -1189,7 +1226,7 @@ const PAGE_TITLES = {
   dashboard: 'Dashboard', casa: 'Estoque CASA', infra: 'Estoque INFRA',
   movimentacoes: 'Movimentações', sugestao: 'Sugestão de Compras',
   compras: 'Pedidos de Compra', historico: 'Histórico de Entradas',
-  admin: 'Usuários', permissoes: 'Permissões', planos: 'Configuração de Planos', requisicoes: 'Requisições Automáticas',
+  admin: 'Usuários', permissoes: 'Permissões', planos: 'Configuração de Planos', requisicoes: 'Requisições Automáticas', exec: 'Dashboard Executivo',
   projecao: 'Projeção de Compras',
   'projecao-ativ': 'Projeção por Ativações'
 };
@@ -1217,6 +1254,7 @@ function navTo(page) {
     permissoes: carregarPermissoes,
     planos: carregarPlanos,
     requisicoes: carregarRequisicoes,
+    exec: carregarDashExec,
   };
   if (loaders[page]) loaders[page]();
 }
@@ -2812,6 +2850,105 @@ async function carregarRequisicoes() {
     }).join('');
   } catch(e) {
     lista.innerHTML = '<div style="text-align:center;color:var(--red);padding:20px">Erro ao carregar</div>';
+  }
+}
+
+
+async function carregarDashExec() {
+  const dias = document.getElementById('ex-filtro-dias')?.value || 7;
+  try {
+    const [reqs, resumo] = await Promise.all([
+      api('/api/requisicoes/?dias=' + dias),
+      api('/api/requisicoes/resumo')
+    ]);
+
+    // KPIs
+    const total = Object.values(resumo).reduce((a,b)=>a+b,0);
+    const apr   = resumo.aprovada || 0;
+    const pend  = resumo.pendente || 0;
+    const acu   = total > 0 ? Math.round(apr/total*100) : 0;
+    document.getElementById('ex-inst').textContent = reqs.filter(r=>r.status==='aprovada').length;
+    document.getElementById('ex-req-ok').textContent = apr;
+    document.getElementById('ex-req-pend').textContent = pend;
+    document.getElementById('ex-acuracia').textContent = acu + '%';
+
+    // Por técnico
+    const porTec = {};
+    reqs.forEach(r => {
+      if (!porTec[r.tecnico_nome]) porTec[r.tecnico_nome] = {total:0, aprovada:0, cancelada:0, pendente:0};
+      porTec[r.tecnico_nome].total++;
+      porTec[r.tecnico_nome][r.status] = (porTec[r.tecnico_nome][r.status]||0) + 1;
+    });
+
+    const tecEl = document.getElementById('ex-por-tecnico');
+    if (Object.keys(porTec).length === 0) {
+      tecEl.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:12px">Nenhum dado</div>';
+    } else {
+      tecEl.innerHTML = Object.entries(porTec).sort((a,b)=>b[1].total-a[1].total).map(([nome,d]) => {
+        const acu = d.total > 0 ? Math.round((d.aprovada||0)/d.total*100) : 0;
+        const w = acu + '%';
+        return '<div style="margin-bottom:10px">' +
+          '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">' +
+          '<span style="font-weight:700">' + nome + '</span>' +
+          '<span style="color:var(--text3)">' + d.total + ' req · ' + acu + '% aprovadas</span></div>' +
+          '<div style="height:6px;background:var(--border);border-radius:4px;overflow:hidden">' +
+          '<div style="height:100%;width:' + w + ';background:var(--green);border-radius:4px;transition:width .5s"></div></div>' +
+          '</div>';
+      }).join('');
+    }
+
+    // Top produtos
+    const prods = {};
+    reqs.forEach(r => {
+      (r.itens||[]).forEach(it => {
+        const n = it.nome||it.grupo||'—';
+        prods[n] = (prods[n]||0) + (it.qtd_falta||0);
+      });
+    });
+    const prodEl = document.getElementById('ex-top-produtos');
+    const topProds = Object.entries(prods).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    if (!topProds.length) {
+      prodEl.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:12px">Nenhum dado</div>';
+    } else {
+      const maxQtd = topProds[0][1];
+      prodEl.innerHTML = topProds.map(([nome,qtd]) => {
+        const w = Math.round(qtd/maxQtd*100) + '%';
+        return '<div style="margin-bottom:8px">' +
+          '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">' +
+          '<span>' + nome.substring(0,35) + '</span>' +
+          '<span style="color:var(--cyan);font-weight:700">' + qtd.toFixed(0) + '</span></div>' +
+          '<div style="height:4px;background:var(--border);border-radius:4px;overflow:hidden">' +
+          '<div style="height:100%;width:' + w + ';background:var(--cyan);border-radius:4px"></div></div>' +
+          '</div>';
+      }).join('');
+    }
+
+    // Histórico
+    const histEl = document.getElementById('ex-historico');
+    if (!reqs.length) {
+      histEl.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:12px">Nenhuma requisição nos últimos ' + dias + ' dias</div>';
+    } else {
+      const statusCor = {pendente:'var(--amber)',aprovada:'var(--green)',cancelada:'var(--red)'};
+      histEl.innerHTML = '<table style="width:100%;border-collapse:collapse">' +
+        '<thead><tr>' +
+        '<th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)">Técnico</th>' +
+        '<th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)">Data</th>' +
+        '<th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)">Itens</th>' +
+        '<th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)">Req IXC</th>' +
+        '<th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)">Status</th>' +
+        '</tr></thead><tbody>' +
+        reqs.map(r => '<tr>' +
+          '<td style="padding:7px 8px;font-size:12px;font-weight:600">' + r.tecnico_nome + '</td>' +
+          '<td style="padding:7px 8px;font-size:11px;color:var(--text3)">' + r.data_referencia + '</td>' +
+          '<td style="padding:7px 8px;font-size:11px">' + (r.itens||[]).length + ' itens</td>' +
+          '<td style="padding:7px 8px;font-size:11px;color:var(--text3)">' + (r.ixc_requisicao_id ? '#'+r.ixc_requisicao_id : '—') + '</td>' +
+          '<td style="padding:7px 8px"><span style="font-size:10px;font-weight:700;color:' + (statusCor[r.status]||'var(--text3)') + '">' + r.status.toUpperCase() + '</span></td>' +
+          '</tr>'
+        ).join('') +
+        '</tbody></table>';
+    }
+  } catch(e) {
+    console.error('Dashboard exec erro:', e);
   }
 }
 
