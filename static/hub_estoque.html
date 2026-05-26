@@ -967,6 +967,7 @@ body.light-mode{--bg:#f0f2f7;--surf:#ffffff;--surf2:#e8ebf2;--surf3:#dde1ec;--bo
     <div class="sec-hd" style="margin-bottom:12px">
       <span class="sec-title">Requisições automáticas</span>
       <div style="display:flex;gap:8px">
+        <button class="tb-btn" style="background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.25)" onclick="verFilaAlmoxarife()">📋 Fila Almoxarife</button>
         <select id="req-filtro-status" class="fb-select" onchange="carregarRequisicoes()">
           <option value="">Todos os status</option>
           <option value="pendente">Pendente</option>
@@ -2949,6 +2950,52 @@ async function carregarDashExec() {
     }
   } catch(e) {
     console.error('Dashboard exec erro:', e);
+  }
+}
+
+
+async function verFilaAlmoxarife() {
+  var modal = document.getElementById('modal-fila');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-fila';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
+    modal.innerHTML = '<div style="background:var(--surf);border:1px solid var(--border);border-radius:12px;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;padding:20px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+      '<span style="font-weight:800;font-size:15px">📋 Fila do Almoxarife</span>' +
+      '<button onclick="document.getElementById('modal-fila').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px">×</button>' +
+      '</div>' +
+      '<div style="font-size:11px;color:var(--text3);margin-bottom:12px">Ordenado por horário da primeira OS</div>' +
+      '<div id="fila-lista">Carregando...</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+  }
+  modal.style.display = 'flex';
+
+  try {
+    const rows = await api('/api/requisicoes/fila-almoxarife');
+    const el = document.getElementById('fila-lista');
+    if (!rows.length) {
+      el.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px">Nenhuma requisição pendente</div>';
+      return;
+    }
+    el.innerHTML = rows.map((r, i) => {
+      const itens = r.itens || [];
+      return '<div style="border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;' + (i===0?'border-color:var(--green)':'') + '">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<div>' +
+        '<span style="font-size:13px;font-weight:800">' + (i===0?'🥇 ':'') + (i+1) + 'º — ' + r.tecnico_nome + '</span>' +
+        (r.primeira_os ? '<span style="font-size:11px;color:var(--green);margin-left:8px">⏰ Primeira OS: ' + r.primeira_os.substring(0,5) + '</span>' : '') +
+        '</div>' +
+        '<span style="font-size:11px;color:var(--text3)">Para: ' + r.data_referencia + '</span>' +
+        '</div>' +
+        '<div style="font-size:11px;color:var(--text3)">' + itens.length + ' itens: ' +
+        itens.slice(0,3).map(it=>(it.nome||it.grupo||'').substring(0,20)).join(', ') +
+        (itens.length>3?'...':'') + '</div>' +
+        '</div>';
+    }).join('');
+  } catch(e) {
+    document.getElementById('fila-lista').innerHTML = '<div style="color:var(--red)">Erro ao carregar fila</div>';
   }
 }
 
