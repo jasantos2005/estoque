@@ -163,6 +163,15 @@ def preparar_dia_seguinte(ixc_tecnico_id: int, tecnico_nome: str, ixc_almox_id: 
 
         esperado = _calcular_esperado_plano(plano["id"], plano["id_plano_ixc"], db_est, ixc_almox_id)
 
+        # Alertar grupos sem estoque
+        alertas_grupo = esperado.pop("_alertas_sem_estoque", [])
+        if alertas_grupo:
+            msg_alerta = (f"⚠️ <b>SEM SUBSTITUTO — {tecnico_nome}</b>\n"
+                         f"OS #{os_row['id']} — {os_row.get('cliente','')}\n"
+                         f"Grupos sem nenhum produto em estoque:\n" +
+                         "\n".join([f"  • {g}" for g in alertas_grupo]))
+            enviar_telegram(msg_alerta, chat_id=TELEGRAM_AILTON)
+
         for grupo, info in esperado.items():
             pid = info.get("id_produto")
             if not pid:
@@ -321,6 +330,15 @@ def _calcular_esperado_plano(id_plano, id_plano_ixc, db_est, ixc_almox_id):
             prod_escolhido = _escolher_produto_maior_saldo(prods, ixc_almox_id=1)
             if prod_escolhido:
                 resultado[nome_grupo] = {"id_produto": prod_escolhido["id"], "nome": prod_escolhido["nome"], "quantidade": float(g["quantidade"])}
+            else:
+                resultado[nome_grupo] = {"id_produto": None, "nome": "", "quantidade": 0,
+                                         "sem_estoque": True, "grupo": nome_grupo}
+
+    # Alertar grupos sem nenhum produto disponível
+    sem_estoque = [info["grupo"] for grupo, info in resultado.items()
+                   if info.get("sem_estoque") and grupo not in ("ONU","Roteador")]
+    if sem_estoque:
+        resultado["_alertas_sem_estoque"] = sem_estoque
 
     return resultado
 
