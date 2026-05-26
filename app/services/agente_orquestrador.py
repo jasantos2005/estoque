@@ -198,17 +198,19 @@ def preparar_dia_seguinte(ixc_tecnico_id: int, tecnico_nome: str, ixc_almox_id: 
     """, (ixc_almox_id,))
     saldo_map = {str(r["id_produto"]): float(r["saldo"]) for r in saldo_tec}
 
-    # Verificar se já existe requisição pendente
-    req_pendente = ixc_select("""
-        SELECT rm.id_produto, SUM(rm.quantidade) as qtd
-        FROM ixcprovedor.requisicao_material rm
-        JOIN ixcprovedor.requisicao r ON r.id = rm.id_requisicao
-        WHERE r.id_funcionario = %s
-        AND r.status IN ('A','P')
-        AND DATE(r.data) >= %s
-        GROUP BY rm.id_produto
-    """, (ixc_tecnico_id, _hoje()))
-    req_map = {str(r["id_produto"]): float(r["qtd"]) for r in req_pendente}
+    # Verificar requisições automáticas pendentes no Hub
+    db_req = _db_estoque()
+    reqs_hub = db_req.execute("""
+        SELECT itens_json FROM ht_requisicoes_auto
+        WHERE ixc_tecnico_id=? AND status='pendente'
+        AND data_referencia=?
+    """, (ixc_tecnico_id, amanha)).fetchall()
+    db_req.close()
+    req_map = {}
+    for _r in reqs_hub:
+        for _it in json.loads(_r["itens_json"] or "[]"):
+            _pid = str(_it.get("id_produto",""))
+            req_map[_pid] = req_map.get(_pid,0) + float(_it.get("qtd_falta",0))
 
     # Calcular o que realmente falta
     itens_requisicao = []
@@ -245,7 +247,7 @@ def preparar_dia_seguinte(ixc_tecnico_id: int, tecnico_nome: str, ixc_almox_id: 
         return
 
     # Criar requisição no IXC
-    _criar_requisicao_ixc(ixc_tecnico_id, tecnico_nome, itens_requisicao, os_amanha, amanha)
+    _criar_requisicao_ixc(ixc_tecnico_id, tecnico_nome, itens_requisicao, os_amanha, amanha, ixc_almox_id)
 
 # ── HELPERS ───────────────────────────────────────────────────────────────────
 
@@ -349,12 +351,12 @@ def _escolher_produto_maior_saldo(prods, ixc_almox_id=1):
     ids = [int(p["id_produto"]) for p in prods]
     ph = ",".join(["%s"]*len(ids))
     saldos = ixc_select(f"""
-        SELECT id_produto, SUM(CASE WHEN tipo='E' THEN quantidade ELSE -quantidade END) as saldo,
-               MAX(descricao) as nome
+        SELECT mp.id_produto, SUM(CASE WHEN mp.tipo='E' THEN mp.quantidade ELSE -mp.quantidade END) as saldo,
+               MAX(p.descricao) as nome
         FROM ixcprovedor.movimento_produtos mp
         JOIN ixcprovedor.produtos p ON p.id = mp.id_produto
         WHERE mp.id_almox = %s AND mp.id_produto IN ({ph})
-        GROUP BY id_produto
+        GROUP BY mp.id_produto
         HAVING saldo > 0
         ORDER BY saldo DESC
         LIMIT 1
@@ -364,7 +366,7 @@ def _escolher_produto_maior_saldo(prods, ixc_almox_id=1):
         return None
     return {"id": saldos[0]["id_produto"], "nome": saldos[0]["nome"], "saldo": float(saldos[0]["saldo"])}
 
-def _criar_requisicao_ixc(ixc_tecnico_id, tecnico_nome, itens, os_amanha, data_ref):
+def _criar_requisicao_ixc(ixc_tecnico_id, tecnico_nome, itens, os_amanha, data_ref, ixc_almox_id=1):
     """Cria a requisição de material no IXC."""
     import base64, requests as req
     ixc_url   = os.getenv("IXC_API_URL", "https://sistema.cliquedf.com.br")
@@ -376,31 +378,34 @@ def _criar_requisicao_ixc(ixc_tecnico_id, tecnico_nome, itens, os_amanha, data_r
     obs = f"Requisição automática — {len(os_amanha)} instalações {data_ref} — OS: {', '.join(os_ids[:5])}"
 
     try:
-        # Criar cabeçalho da requisição
-        r = req.post(f"{ixc_url}/webservice/v1/requisicao_material",
-            headers={"Authorization": f"Basic {auth}", "Content-Type": "application/json"},
-            json={"id_funcionario": str(ixc_tecnico_id), "obs": obs, "status": "A"},
-            timeout=30)
-
-        if not r.ok or r.json().get("type") != "success":
-            log.error(f"[{tecnico_nome}] Erro ao criar requisição: {r.text[:200]}")
-            enviar_telegram(f"❌ <b>{tecnico_nome}</b>\nErro ao criar requisição no IXC: {r.text[:100]}", chat_id=TELEGRAM_AILTON)
+        # Criar via MySQL direto (igual HubTecnico)
+        from datetime import datetime as _dt2, timedelta as _td2
+        brt_now = (_dt2.now() - _td2(hours=3)).strftime("%Y-%m-%d")
+        ixc_insert("""INSERT INTO ixcprovedor.requisicao_material
+            (id_tecnico, id_almox, `data`, status, id_filial, obs, pref_almox, tipo)
+            VALUES (%s, %s, %s, 'A', 1, %s, 1, 'M')
+        """, (ixc_tecnico_id, ixc_almox_id, brt_now, obs))
+        ixc_req = ixc_select(
+            "SELECT id FROM ixcprovedor.requisicao_material WHERE id_tecnico=%s ORDER BY id DESC LIMIT 1" % ixc_tecnico_id
+        )
+        if not ixc_req:
+            log.error(f"[{tecnico_nome}] Erro ao buscar req criada")
             return
-
-        req_id = r.json().get("id")
+        req_id = ixc_req[0]["id"]
         log.info(f"[{tecnico_nome}] Requisição #{req_id} criada")
 
-        # Adicionar itens
+        # Adicionar itens via MySQL direto
         itens_ok = 0
         for item in itens:
-            ri = req.post(f"{ixc_url}/webservice/v1/requisicao_material_item",
-                headers={"Authorization": f"Basic {auth}", "Content-Type": "application/json"},
-                json={"id_requisicao": str(req_id), "id_produto": str(item["id_produto"]),
-                      "quantidade": str(item["qtd_falta"])},
-                timeout=30)
-            if ri.ok:
+            try:
+                ixc_insert("""INSERT INTO ixcprovedor.requisicao_material_item
+                    (id_produto, qtde, qtde_saldo, status, id_requisicao, descricao)
+                    VALUES (%s, %s, %s, 'A', %s, '')
+                """, (int(item["id_produto"]), item["qtd_falta"], item["qtd_falta"], req_id))
                 itens_ok += 1
-
+            except Exception as ei:
+                log.warning(f"[{tecnico_nome}] Erro item {item['id_produto']}: {ei}")
+        # Salvar no Hub
         # Salvar no Hub
         db_est = _db_estoque()
         db_est.execute("""
