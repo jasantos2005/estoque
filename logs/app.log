@@ -5486,3 +5486,88 @@ INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 U
 INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
 INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
 INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/planos/ HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/planos/13/completo HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/planos/16/completo HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/planos/ HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/planos/13/completo HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.171:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.171:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/casa?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/infra?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=2026-05-01&ate=2026-05-25 HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/compras/pedidos HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/compras/produtos-consumo HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/planos/ HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/planos/14/completo HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/planos/14/completo HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/planos/11/completo HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     127.0.0.1:34126 - "GET /api/estoque/sugestao HTTP/1.1" 200 OK
+INFO:     172.68.229.50:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.68.229.13:0 - "GET /.env HTTP/1.0" 404 Not Found
+INFO:     162.158.216.173:0 - "GET /.env.local HTTP/1.0" 404 Not Found
+INFO:     172.68.229.13:0 - "GET /.env.backup HTTP/1.0" 404 Not Found
+INFO:     162.158.216.70:0 - "GET /.env.bak HTTP/1.0" 404 Not Found
+INFO:     172.68.229.50:0 - "GET /firebase-adminsdk.json HTTP/1.0" 404 Not Found
+INFO:     172.69.224.172:0 - "GET /secrets.json HTTP/1.0" 404 Not Found
+INFO:     172.69.224.172:0 - "GET /google-credentials.json HTTP/1.0" 404 Not Found
+INFO:     172.69.224.172:0 - "GET /key.json HTTP/1.0" 404 Not Found
+INFO:     172.69.224.172:0 - "GET /actuator/env HTTP/1.0" 404 Not Found
+INFO:     172.70.90.79:0 - "GET /keyfile.json HTTP/1.0" 404 Not Found
+INFO:     172.68.229.121:0 - "GET /robots.txt HTTP/1.0" 404 Not Found
+INFO:     172.70.86.28:0 - "GET /service-account.json HTTP/1.0" 404 Not Found
+INFO:     172.70.86.28:0 - "GET /config.json HTTP/1.0" 404 Not Found
+INFO:     172.70.86.28:0 - "GET /account.json HTTP/1.0" 404 Not Found
+INFO:     172.69.194.242:0 - "GET /api/env HTTP/1.0" 404 Not Found
+INFO:     172.69.7.223:0 - "GET / HTTP/1.0" 200 OK
+INFO:     172.69.7.223:0 - "POST / HTTP/1.0" 405 Method Not Allowed
+INFO:     141.101.99.105:0 - "GET /.git/config HTTP/1.0" 404 Not Found
+INFO:     172.64.192.172:0 - "GET /.env HTTP/1.0" 404 Not Found
+INFO:     172.70.162.14:0 - "GET /.env.local HTTP/1.0" 404 Not Found
+INFO:     141.101.99.21:0 - "GET /.env.production HTTP/1.0" 404 Not Found
+INFO:     141.101.99.105:0 - "GET /.env.backup HTTP/1.0" 404 Not Found
+INFO:     172.64.192.172:0 - "GET /keyfile.json HTTP/1.0" 404 Not Found
+INFO:     172.70.162.14:0 - "GET /secrets.json HTTP/1.0" 404 Not Found
+INFO:     172.68.229.120:0 - "GET /robots.txt HTTP/1.0" 404 Not Found
+INFO:     172.71.241.27:0 - "GET /key.json HTTP/1.0" 404 Not Found
+INFO:     172.71.241.27:0 - "GET /google-credentials.json HTTP/1.0" 404 Not Found
+INFO:     172.68.229.51:0 - "GET /actuator/env HTTP/1.0" 404 Not Found
+INFO:     172.68.229.50:0 - "GET /service-account.json HTTP/1.0" 404 Not Found
+INFO:     172.69.194.243:0 - "GET /api/env HTTP/1.0" 404 Not Found
+INFO:     172.71.239.121:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-05-26 HTTP/1.0" 200 OK
+INFO:     104.23.254.223:0 - "GET /favicon.ico HTTP/1.0" 404 Not Found
+INFO:     172.71.239.99:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     104.22.10.192:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
