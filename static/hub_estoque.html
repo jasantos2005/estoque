@@ -2954,6 +2954,7 @@ async function carregarDashExec() {
 }
 
 
+function fecharModalFila() { var m = document.getElementById("modal-fila"); if(m) m.style.display="none"; }
 async function verFilaAlmoxarife() {
   var modal = document.getElementById('modal-fila');
   if (!modal) {
@@ -2963,7 +2964,7 @@ async function verFilaAlmoxarife() {
     modal.innerHTML = '<div style="background:var(--surf);border:1px solid var(--border);border-radius:12px;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;padding:20px">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
       '<span style="font-weight:800;font-size:15px">📋 Fila do Almoxarife</span>' +
-      '<button onclick="document.getElementById('modal-fila').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px">×</button>' +
+      '<button onclick="fecharModalFila()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px">×</button>' +
       '</div>' +
       '<div style="font-size:11px;color:var(--text3);margin-bottom:12px">Ordenado por horário da primeira OS</div>' +
       '<div id="fila-lista">Carregando...</div>' +
@@ -3010,5 +3011,11 @@ async function verFilaAlmoxarife() {
 <!-- MODAL PRODUTO -->
 
 
-</body>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/static/sw.js")
+    .then(() => console.log("SW registrado"))
+    .catch(e => console.log("SW erro", e));
+}
+</script></body>
 </html>

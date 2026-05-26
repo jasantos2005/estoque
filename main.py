@@ -27,7 +27,11 @@ if STATIC_DIR.exists():
 @app.get("/", response_class=HTMLResponse)
 async def root():
     p = STATIC_DIR / "hub_estoque.html"
-    return p.read_text(encoding="utf-8") if p.exists() else "<h2>Hub Estoque OK</h2>"
+    content = p.read_text(encoding="utf-8") if p.exists() else "<h2>Hub Estoque OK</h2>"
+    return HTMLResponse(content, headers={
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache", "Expires": "0"
+    })
 
 @app.get("/health")
 async def health():
