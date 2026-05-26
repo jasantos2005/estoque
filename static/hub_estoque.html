@@ -396,6 +396,10 @@ body.light-mode{--bg:#f0f2f7;--surf:#ffffff;--surf2:#e8ebf2;--surf3:#dde1ec;--bo
       </div>
 
       <div class="sb-group-label">SISTEMA</div>
+      <div class="ni" id="ni-requisicoes" onclick="navTo('requisicoes')">
+        <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 11l3 3L22 4'/><path d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/></svg>
+        <span class="ni-label">Requisições</span>
+      </div>
       <div class="ni" id="ni-planos" onclick="navTo('planos')">
         <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2'/><rect x='9' y='3' width='6' height='4' rx='1'/><path d='M9 12h6M9 16h4'/></svg>
         <span class="ni-label">Planos</span>
@@ -947,6 +951,36 @@ body.light-mode{--bg:#f0f2f7;--surf:#ffffff;--surf2:#e8ebf2;--surf3:#dde1ec;--bo
   </div>
 </div>
 
+
+<div id="page-requisicoes" class="page">
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi" style="--ac:var(--amber)"><div class="kv" id="req-pendente">0</div><div class="kl">Pendentes</div><div class="ki">⏳</div></div>
+    <div class="kpi" style="--ac:var(--green)"><div class="kv" id="req-aprovada">0</div><div class="kl">Aprovadas</div><div class="ki">✅</div></div>
+    <div class="kpi" style="--ac:var(--red)"><div class="kv" id="req-cancelada">0</div><div class="kl">Canceladas</div><div class="ki">❌</div></div>
+    <div class="kpi" style="--ac:var(--cyan)"><div class="kv" id="req-total">0</div><div class="kl">Total 30 dias</div><div class="ki">📋</div></div>
+  </div>
+  <div class="card">
+    <div class="sec-hd" style="margin-bottom:12px">
+      <span class="sec-title">Requisições automáticas</span>
+      <div style="display:flex;gap:8px">
+        <select id="req-filtro-status" class="fb-select" onchange="carregarRequisicoes()">
+          <option value="">Todos os status</option>
+          <option value="pendente">Pendente</option>
+          <option value="aprovada">Aprovada</option>
+          <option value="cancelada">Cancelada</option>
+        </select>
+        <select id="req-filtro-dias" class="fb-select" onchange="carregarRequisicoes()">
+          <option value="7">7 dias</option>
+          <option value="15">15 dias</option>
+          <option value="30">30 dias</option>
+        </select>
+        <button class="tb-btn tb-btn-cyan" onclick="carregarRequisicoes()">↻ Atualizar</button>
+      </div>
+    </div>
+    <div id="req-lista"></div>
+  </div>
+</div>
+
 </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /shell -->
@@ -1155,7 +1189,7 @@ const PAGE_TITLES = {
   dashboard: 'Dashboard', casa: 'Estoque CASA', infra: 'Estoque INFRA',
   movimentacoes: 'Movimentações', sugestao: 'Sugestão de Compras',
   compras: 'Pedidos de Compra', historico: 'Histórico de Entradas',
-  admin: 'Usuários', permissoes: 'Permissões', planos: 'Configuração de Planos',
+  admin: 'Usuários', permissoes: 'Permissões', planos: 'Configuração de Planos', requisicoes: 'Requisições Automáticas',
   projecao: 'Projeção de Compras',
   'projecao-ativ': 'Projeção por Ativações'
 };
@@ -1182,6 +1216,7 @@ function navTo(page) {
     admin: carregarAdmin,
     permissoes: carregarPermissoes,
     planos: carregarPlanos,
+    requisicoes: carregarRequisicoes,
   };
   if (loaders[page]) loaders[page]();
 }
@@ -2717,6 +2752,67 @@ async function deletarGrupo(idPlano, idGrupo) {
   await api('/api/planos/' + idPlano + '/grupos/' + idGrupo, {method:'DELETE'});
   await selecionarPlano(idPlano);
   await carregarPlanos();
+}
+
+
+async function carregarRequisicoes() {
+  const dias = document.getElementById('req-filtro-dias')?.value || 7;
+  const filtroStatus = document.getElementById('req-filtro-status')?.value || '';
+  const lista = document.getElementById('req-lista');
+  if (!lista) return;
+  lista.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px">Carregando...</div>';
+
+  try {
+    const [rows, resumo] = await Promise.all([
+      api('/api/requisicoes/?dias=' + dias),
+      api('/api/requisicoes/resumo')
+    ]);
+
+    document.getElementById('req-pendente').textContent = resumo.pendente || 0;
+    document.getElementById('req-aprovada').textContent = resumo.aprovada || 0;
+    document.getElementById('req-cancelada').textContent = resumo.cancelada || 0;
+    document.getElementById('req-total').textContent = Object.values(resumo).reduce((a,b)=>a+b,0);
+
+    const filtradas = filtroStatus ? rows.filter(r => r.status === filtroStatus) : rows;
+
+    if (!filtradas.length) {
+      lista.innerHTML = '<div style="text-align:center;color:var(--text3);padding:30px">Nenhuma requisição encontrada</div>';
+      return;
+    }
+
+    const statusCor = {pendente:'var(--amber)', aprovada:'var(--green)', cancelada:'var(--red)'};
+    const statusIcon = {pendente:'⏳', aprovada:'✅', cancelada:'❌'};
+
+    lista.innerHTML = filtradas.map(r => {
+      const itens = r.itens || [];
+      const itensHtml = itens.slice(0,5).map(i =>
+        '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px;border-bottom:1px solid var(--border)">' +
+        '<span>' + (i.nome||i.grupo||'—').substring(0,40) + '</span>' +
+        '<span style="color:var(--accent2);font-weight:700">' + (i.qtd_falta||0).toFixed(0) + ' un</span>' +
+        '</div>'
+      ).join('') + (itens.length > 5 ? '<div style="font-size:10px;color:var(--text3);margin-top:4px">+ ' + (itens.length-5) + ' outros itens</div>' : '');
+
+      return '<div style="border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">' +
+        '<div style="background:var(--surf2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+        '<div>' +
+        '<span style="font-weight:700;font-size:13px">👤 ' + r.tecnico_nome + '</span>' +
+        (r.ixc_requisicao_id ? '<span style="font-size:11px;color:var(--text3);margin-left:8px">Req IXC #' + r.ixc_requisicao_id + '</span>' : '') +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px">' +
+        '<span style="font-size:11px;color:var(--text3)">📅 ' + r.data_referencia + '</span>' +
+        '<span class="badge" style="background:rgba(0,0,0,.1);color:' + (statusCor[r.status]||'var(--text3)') + '">' + (statusIcon[r.status]||'') + ' ' + r.status + '</span>' +
+        '</div>' +
+        '</div>' +
+        (itens.length ? '<div style="padding:8px 14px">' + itensHtml + '</div>' : '') +
+        '<div style="padding:6px 14px;font-size:10px;color:var(--text3);border-top:1px solid var(--border)">' +
+        'Criado: ' + (r.criado_em||'').substring(0,16) +
+        (r.os_ids && r.os_ids.length ? ' · OS: ' + r.os_ids.slice(0,3).join(', ') : '') +
+        '</div>' +
+        '</div>';
+    }).join('');
+  } catch(e) {
+    lista.innerHTML = '<div style="text-align:center;color:var(--red);padding:20px">Erro ao carregar</div>';
+  }
 }
 
 </script>

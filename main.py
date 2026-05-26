@@ -13,12 +13,13 @@ LOGS_DIR.mkdir(exist_ok=True)
 
 app = FastAPI(title="Hub Estoque", version="1.0.0")
 
-from app.routes import auth, estoque, compras, admin as admin_router, planos as planos_router
+from app.routes import auth, estoque, compras, admin as admin_router, planos as planos_router, requisicoes as req_router
 app.include_router(auth.router,          prefix="/api/auth",    tags=["Auth"])
 app.include_router(estoque.router,       prefix="/api/estoque", tags=["Estoque"])
 app.include_router(compras.router,       prefix="/api/compras", tags=["Compras"])
 app.include_router(admin_router.router,  prefix="/api/admin",   tags=["Admin"])
 app.include_router(planos_router.router, prefix="/api/planos",  tags=["Planos"])
+app.include_router(req_router.router,   prefix="/api/requisicoes", tags=["Requisicoes"])
 
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
