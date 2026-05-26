@@ -358,10 +358,124 @@ def monitorar_aprovacoes():
     TELEGRAM_GRUPO = os.getenv("TELEGRAM_GRUPO","")
 
 
+def verificar_estoque_critico():
+    """Verifica se almox principal tem estoque para todas as instalações de amanhã."""
+    from datetime import datetime, timedelta
+    amanha = (datetime.now() - timedelta(hours=3) + timedelta(days=1)).strftime("%Y-%m-%d")
+    log.info(f"Verificação estoque crítico para {amanha}")
+
+    sys.path.insert(0, "/opt/automacoes/cliquedf/tecnico")
+    from app.services.ixc_db import ixc_select
+    ID_ASSUNTO = 227
+
+    # Buscar todos os técnicos ativos
+    tecnicos = [
+        {"id": 47, "nome": "LEANDRO",    "almox": 54},
+        {"id": 13, "nome": "ALEXANDRE",  "almox": 56},
+        {"id": 17, "nome": "DENISON",    "almox": 14},
+        {"id": 50, "nome": "RICARDO",    "almox": 46},
+        {"id": 32, "nome": "RODRIGO",    "almox": 33},
+        {"id": 35, "nome": "RODRIGO 2",  "almox": 33},
+        {"id": 56, "nome": "ROGERIO",    "almox": 51},
+        {"id": 55, "nome": "VICTOR",     "almox": 48},
+        {"id": 60, "nome": "WELINTON",   "almox": 51},
+        {"id": 46, "nome": "WELLINGTON", "almox": 43},
+    ]
+
+    # Saldo almox principal
+    saldo_principal = ixc_select("""
+        SELECT id, SUM(saldo) as saldo
+        FROM ixcprovedor.view_estoque_produtos_almox_filial
+        WHERE almox_id = 1
+        GROUP BY id HAVING saldo > 0
+    """)
+    saldo_map = {str(r["id"]): float(r["saldo"]) for r in saldo_principal}
+
+    db = _db()
+    necessidade_total = {}  # id_produto -> {nome, qtd_necessaria, tecnicos}
+
+    for tec in tecnicos:
+        # OS de instalação amanhã
+        os_amanha = ixc_select("""
+            SELECT s.id, s.id_contrato_kit
+            FROM ixcprovedor.su_oss_chamado s
+            WHERE s.id_tecnico = %s AND s.id_assunto = %s
+            AND s.status IN ('A','AG') AND DATE(s.data_reservada) = %s
+        """, (tec["id"], ID_ASSUNTO, amanha))
+
+        if not os_amanha:
+            continue
+
+        for os_row in os_amanha:
+            contrato = os_row.get("id_contrato_kit")
+            if not contrato:
+                continue
+            cc = ixc_select("SELECT id_vd_contrato FROM ixcprovedor.cliente_contrato WHERE id=%s", (contrato,))
+            if not cc:
+                continue
+            id_plano_ixc = cc[0]["id_vd_contrato"]
+            plano = db.execute("SELECT id FROM ht_plano_config WHERE id_plano_ixc=? AND ativo=1", (id_plano_ixc,)).fetchone()
+            if not plano:
+                continue
+
+            grupos = db.execute("""
+                SELECT g.nome_grupo, g.quantidade, gp.id_produto
+                FROM ht_plano_grupo g
+                JOIN ht_plano_grupo_produto gp ON gp.id_grupo = g.id
+                WHERE g.id_plano_config = ?
+                ORDER BY g.nome_grupo, gp.prioridade
+            """, (plano["id"],)).fetchall()
+
+            vistos = set()
+            for g in grupos:
+                nome_grupo = g["nome_grupo"]
+                if nome_grupo in vistos:
+                    continue
+                vistos.add(nome_grupo)
+                pid = str(g["id_produto"])
+                qtd = float(g["quantidade"])
+                if pid not in necessidade_total:
+                    necessidade_total[pid] = {"qtd": 0, "tecnicos": set(), "grupo": nome_grupo}
+                necessidade_total[pid]["qtd"] += qtd
+                necessidade_total[pid]["tecnicos"].add(tec["nome"])
+
+    db.close()
+
+    # Comparar necessidade vs saldo
+    criticos = []
+    for pid, info in necessidade_total.items():
+        saldo = saldo_map.get(pid, 0)
+        falta = info["qtd"] - saldo
+        if falta > 0:
+            criticos.append({
+                "id_produto": pid,
+                "grupo": info["grupo"],
+                "necessario": info["qtd"],
+                "saldo": saldo,
+                "falta": falta,
+                "tecnicos": list(info["tecnicos"])
+            })
+
+    if not criticos:
+        log.info(f"Estoque crítico OK — almox principal suficiente para {amanha}")
+        return
+
+    linhas = [f"🚨 <b>ALERTA ESTOQUE CRÍTICO — {amanha}</b>",
+              f"Almox principal insuficiente para as instalações de amanhã!\n"]
+    for c in sorted(criticos, key=lambda x: x["falta"], reverse=True)[:10]:
+        linhas.append(f"⚠️ Grupo: <b>{c['grupo']}</b> (ID:{c['id_produto']})")
+        linhas.append(f"   Necessário: {c['necessario']:.0f} | Saldo: {c['saldo']:.0f} | Falta: {c['falta']:.0f}")
+        linhas.append(f"   Técnicos: {', '.join(c['tecnicos'])}")
+        linhas.append("")
+
+    linhas.append("🔔 Providencie reposição antes das 18h!")
+    enviar_telegram("\n".join(linhas), chat_id=TELEGRAM_AILTON)
+    log.info(f"Alerta crítico enviado — {len(criticos)} produtos insuficientes")
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ciclo", choices=["manha","tarde","fechamento","relatorio","monitor"], required=True)
+    parser.add_argument("--ciclo", choices=["manha","tarde","fechamento","relatorio","monitor","critico"], required=True)
     args = parser.parse_args()
 
     ciclos = {
@@ -370,6 +484,8 @@ if __name__ == "__main__":
         "fechamento": auditar_fechamento,
         "relatorio": relatorio_completo,
         "monitor":   monitorar_aprovacoes,
+        "critico":   verificar_estoque_critico,
     }
     ciclos[args.ciclo]()
+
 
