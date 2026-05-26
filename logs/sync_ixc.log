@@ -1903,3 +1903,59 @@
 
   ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
 
+
+🔄  Atualizando saldos  [26/05/2026 15:30:03]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 16:00:04]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 16:30:02]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 17:00:07]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 17:30:03]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Sync IXC -> estoque.db  [26/05/2026 18:00:03]
+
+  [1/3] Buscando produtos do IXC...
+  -> 509 produtos encontrados
+  [2/3] Gravando no SQLite...
+  -> 0 novos  |  509 atualizados
+  [3/3] Registrando ajuste de saldo...
+
+✅  Concluido  [26/05/2026 18:00:07]
+
+
+🔄  Atualizando saldos  [26/05/2026 18:00:04]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 18:30:04]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 19:00:03]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
+
+🔄  Atualizando saldos  [26/05/2026 19:30:03]
+
+  ✅  509 saldos atualizados  |  0 sem cadastro local ignorados
+
