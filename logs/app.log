@@ -5579,3 +5579,23 @@ INFO:     104.22.10.193:0 - "GET /api/estoque/dashboard?de=2026-05-01&ate=2026-0
 INFO:     104.22.10.193:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
 INFO:     104.22.10.193:0 - "GET /api/requisicoes/?dias=7 HTTP/1.0" 200 OK
 INFO:     104.22.10.193:0 - "GET /api/requisicoes/resumo HTTP/1.0" 200 OK
+INFO:     172.70.144.67:0 - "GET /favicon.ico HTTP/1.0" 404 Not Found
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.170:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.68.14.171:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     104.23.254.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
