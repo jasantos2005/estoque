@@ -5572,3 +5572,4 @@ INFO:     104.23.254.223:0 - "GET /favicon.ico HTTP/1.0" 404 Not Found
 INFO:     172.71.239.99:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
 INFO:     104.22.10.192:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
 INFO:     172.69.39.24:0 - "GET / HTTP/1.0" 200 OK
+INFO:     104.22.24.228:0 - "GET /robots.txt HTTP/1.0" 404 Not Found

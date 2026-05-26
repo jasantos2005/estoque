@@ -271,10 +271,97 @@ def relatorio_completo():
     except Exception as e:
         log.error(f"Erro relatório: {e}")
 
+def monitorar_aprovacoes():
+    """Verifica requisições pendentes no IXC e notifica quando aprovadas."""
+    import base64, requests as req
+    log.info("Monitor aprovacoes")
+    load_dotenv(BASE_DIR / ".env")
+    ixc_url   = os.getenv("IXC_API_URL","https://sistema.cliquedf.com.br")
+    ixc_user  = os.getenv("IXC_API_USER","64")
+    ixc_token = os.getenv("IXC_API_TOKEN","")
+    auth = base64.b64encode(f"{ixc_user}:{ixc_token}".encode()).decode()
+    TELEGRAM_GRUPO = os.getenv("TELEGRAM_GRUPO","")
+
+    db = _db()
+    pendentes = db.execute("""
+        SELECT id, ixc_requisicao_id, tecnico_nome, itens_json, data_referencia
+        FROM ht_requisicoes_auto
+        WHERE status = 'pendente'
+        AND ixc_requisicao_id IS NOT NULL
+    """).fetchall()
+
+    if not pendentes:
+        log.info("Sem requisicoes pendentes")
+        db.close()
+        return
+
+    for r in pendentes:
+        try:
+            resp = req.get(
+                f"{ixc_url}/webservice/v1/requisicao_material?qtype=id&query={r['ixc_requisicao_id']}&oper=%3D&page=1&rp=1",
+                headers={"Authorization": f"Basic {auth}"},
+                timeout=15
+            )
+            if not resp.ok:
+                continue
+            data = resp.json()
+            registros = data.get("registros", []) or []
+            if not registros:
+                continue
+            status_ixc = registros[0].get("status","")
+
+            if status_ixc == "F":
+                db.execute("UPDATE ht_requisicoes_auto SET status='aprovada', atualizado_em=? WHERE id=?",
+                           (_agora().strftime("%Y-%m-%d %H:%M:%S"), r["id"]))
+                itens = json.loads(r["itens_json"] or "[]")
+                linhas = [
+                    f"📦 <b>REQUISIÇÃO APROVADA</b>",
+                    f"",
+                    f"👤 Técnico: <b>{r['tecnico_nome']}</b>",
+                    f"📋 Req #{r['ixc_requisicao_id']} — {r['data_referencia']}",
+                    f"",
+                ]
+                if itens:
+                    linhas.append("Itens liberados:")
+                    for item in itens[:8]:
+                        linhas.append(f"  • {item.get('nome','')[:35]} — {item.get('qtd_falta',0):.0f}")
+                linhas.append(f"")
+                linhas.append(f"⚠️ <b>{r['tecnico_nome']}</b>, dirija-se ao estoque para retirar!")
+                msg = "\n".join(linhas)
+                enviar_telegram(msg, chat_id=TELEGRAM_AILTON)
+                if TELEGRAM_GRUPO:
+                    enviar_telegram(msg, chat_id=TELEGRAM_GRUPO)
+                log.info(f"Req #{r['ixc_requisicao_id']} aprovada — notificado")
+
+            elif status_ixc == "C":
+                db.execute("UPDATE ht_requisicoes_auto SET status='cancelada', atualizado_em=? WHERE id=?",
+                           (_agora().strftime("%Y-%m-%d %H:%M:%S"), r["id"]))
+                enviar_telegram(
+                    f"❌ <b>REQUISIÇÃO CANCELADA</b>\nReq #{r['ixc_requisicao_id']} — {r['tecnico_nome']}",
+                    chat_id=TELEGRAM_AILTON)
+                log.info(f"Req #{r['ixc_requisicao_id']} cancelada")
+
+        except Exception as e:
+            log.warning(f"Erro verificar req #{r['ixc_requisicao_id']}: {e}")
+
+    db.commit()
+    db.close()
+def monitorar_aprovacoes():
+    """Verifica requisições pendentes no IXC e notifica quando aprovadas."""
+    import base64, requests as req
+    log.info("Monitor aprovacoes")
+    load_dotenv(BASE_DIR / ".env")
+    ixc_url   = os.getenv("IXC_API_URL","https://sistema.cliquedf.com.br")
+    ixc_user  = os.getenv("IXC_API_USER","64")
+    ixc_token = os.getenv("IXC_API_TOKEN","")
+    auth = base64.b64encode(f"{ixc_user}:{ixc_token}".encode()).decode()
+    TELEGRAM_GRUPO = os.getenv("TELEGRAM_GRUPO","")
+
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ciclo", choices=["manha","tarde","fechamento","relatorio"], required=True)
+    parser.add_argument("--ciclo", choices=["manha","tarde","fechamento","relatorio","monitor"], required=True)
     args = parser.parse_args()
 
     ciclos = {
@@ -282,5 +369,7 @@ if __name__ == "__main__":
         "tarde":     auditar_requisicoes_tarde,
         "fechamento": auditar_fechamento,
         "relatorio": relatorio_completo,
+        "monitor":   monitorar_aprovacoes,
     }
     ciclos[args.ciclo]()
+

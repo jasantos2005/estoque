@@ -428,10 +428,93 @@ if __name__ == "__main__":
     parser.add_argument("--tecnico-id",  type=int, required=True)
     parser.add_argument("--tecnico-nome", type=str, required=True)
     parser.add_argument("--almox-id",    type=int, required=True)
-    parser.add_argument("--ciclo",       choices=["auditoria","preparar"], required=True)
+    parser.add_argument("--ciclo",       choices=["auditoria","preparar","canceladas"], required=True)
     args = parser.parse_args()
 
     if args.ciclo == "auditoria":
         auditar_consumo(args.tecnico_id, args.tecnico_nome, args.almox_id)
     else:
         preparar_dia_seguinte(args.tecnico_id, args.tecnico_nome, args.almox_id)
+
+# ── CICLO 07H — VERIFICAÇÃO OS CANCELADAS ────────────────────────────────────
+
+def verificar_os_canceladas(ixc_tecnico_id: int, tecnico_nome: str):
+    """Verifica se OS agendadas para hoje foram canceladas após a requisição."""
+    hoje = _hoje()
+    log.info(f"[{tecnico_nome}] Verificando OS canceladas {hoje}")
+
+    db_est = _db_estoque()
+
+    # Requisições automáticas criadas ontem para hoje
+    reqs = db_est.execute("""
+        SELECT id, ixc_requisicao_id, os_referencia, itens_json
+        FROM ht_requisicoes_auto
+        WHERE status = 'pendente'
+        AND data_referencia = ?
+        AND ixc_tecnico_id = ?
+    """, (hoje, ixc_tecnico_id)).fetchall()
+
+    if not reqs:
+        log.info(f"[{tecnico_nome}] Sem requisições para hoje")
+        db_est.close()
+        return
+
+    import base64, requests as req
+    ixc_url   = os.getenv("IXC_API_URL","https://sistema.cliquedf.com.br")
+    ixc_user  = os.getenv("IXC_API_USER","64")
+    ixc_token = os.getenv("IXC_API_TOKEN","")
+    auth = base64.b64encode(f"{ixc_user}:{ixc_token}".encode()).decode()
+
+    for r in reqs:
+        os_ids = json.loads(r["os_referencia"] or "[]")
+        if not os_ids:
+            continue
+
+        # Verificar status das OS no IXC
+        ph = ",".join(["%s"]*len(os_ids))
+        os_status = ixc_select(
+            f"SELECT id, status FROM ixcprovedor.su_oss_chamado WHERE id IN ({ph})",
+            tuple(int(x) for x in os_ids)
+        )
+        status_map = {str(o["id"]): o["status"] for o in os_status}
+
+        canceladas = [oid for oid in os_ids if status_map.get(str(oid)) in ("C","CA","X")]
+        ativas     = [oid for oid in os_ids if status_map.get(str(oid)) in ("A","AG","AS","E")]
+
+        if not canceladas:
+            log.info(f"[{tecnico_nome}] Req #{r['ixc_requisicao_id']} — todas OS ativas")
+            continue
+
+        log.warning(f"[{tecnico_nome}] {len(canceladas)} OS canceladas — req #{r['ixc_requisicao_id']}")
+
+        if not ativas:
+            # Todas canceladas — cancelar requisição no IXC
+            try:
+                rc = req.put(
+                    f"{ixc_url}/webservice/v1/requisicao_material/{r['ixc_requisicao_id']}",
+                    headers={"Authorization": f"Basic {auth}", "Content-Type": "application/json"},
+                    json={"status": "C", "obs": f"Cancelada automaticamente — todas OS canceladas"},
+                    timeout=30
+                )
+                if rc.ok:
+                    db_est.execute(
+                        "UPDATE ht_requisicoes_auto SET status='cancelada' WHERE id=?", (r["id"],)
+                    )
+                    msg = (f"🚫 <b>REQUISIÇÃO CANCELADA — {tecnico_nome}</b>\n"
+                           f"Req #{r['ixc_requisicao_id']} cancelada automaticamente.\n"
+                           f"Motivo: todas as {len(canceladas)} OS foram canceladas.")
+                    enviar_telegram(msg, chat_id=TELEGRAM_AILTON)
+                    log.info(f"[{tecnico_nome}] Req #{r['ixc_requisicao_id']} cancelada")
+            except Exception as e:
+                log.error(f"[{tecnico_nome}] Erro cancelar req: {e}")
+        else:
+            # Parte cancelada — apenas alertar
+            msg = (f"⚠️ <b>OS CANCELADAS — {tecnico_nome}</b>\n"
+                   f"Data: {hoje}\n"
+                   f"OS canceladas: {', '.join(str(x) for x in canceladas)}\n"
+                   f"OS ainda ativas: {len(ativas)}\n"
+                   f"Req #{r['ixc_requisicao_id']} mantida — verificar quantidade necessária.")
+            enviar_telegram(msg, chat_id=TELEGRAM_AILTON)
+
+    db_est.commit()
+    db_est.close()
