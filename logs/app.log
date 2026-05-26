@@ -5606,3 +5606,9 @@ INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Una
 INFO:     172.68.19.48:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
 INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
 INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     104.22.10.192:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.64.222.197:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.71.235.36:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 200 OK
+INFO:     172.69.91.27:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.69.91.28:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized
+INFO:     172.64.222.196:0 - "GET /api/estoque/sugestao?de=&ate= HTTP/1.0" 401 Unauthorized

@@ -422,21 +422,107 @@ def _notificar_desvios(tecnico_nome, desvios):
         linhas.append(f"   {d['grupo']}: esperado {d['esperado']:.0f} | real {d['real']:.0f}")
     enviar_telegram("\n".join(linhas), chat_id=TELEGRAM_AILTON)
 
+def calcular_devolucao(ixc_tecnico_id: int, tecnico_nome: str, ixc_almox_id: int):
+    """Calcula material sobrado do dia e notifica almoxarife para devolução."""
+    hoje = _hoje()
+    log.info(f"[{tecnico_nome}] Calculando devolução {hoje}")
+
+    # Requisições aprovadas hoje
+    db_est = _db_estoque()
+    reqs = db_est.execute("""
+        SELECT itens_json FROM ht_requisicoes_auto
+        WHERE ixc_tecnico_id=? AND status='aprovada'
+        AND DATE(atualizado_em)=?
+    """, (ixc_tecnico_id, hoje)).fetchall()
+    db_est.close()
+
+    if not reqs:
+        log.info(f"[{tecnico_nome}] Sem requisições aprovadas hoje")
+        return
+
+    # Total requisitado hoje
+    requisitado = {}
+    for r in reqs:
+        itens = json.loads(r["itens_json"] or "[]")
+        for item in itens:
+            pid = str(item.get("id_produto",""))
+            qtd = float(item.get("qtd_falta", 0))
+            nome = item.get("nome","")
+            if pid not in requisitado:
+                requisitado[pid] = {"nome": nome, "qtd": 0}
+            requisitado[pid]["qtd"] += qtd
+
+    # Total consumido hoje (OS finalizadas)
+    db_tec = _db_tecnico()
+    consumido = {}
+    os_hoje = db_tec.execute("""
+        SELECT o.ixc_os_id FROM ht_os o
+        JOIN ht_os_execucao e ON e.ixc_os_id = o.ixc_os_id
+        WHERE o.id_tecnico=(SELECT id FROM ht_usuarios WHERE ixc_funcionario_id=?)
+        AND o.id_assunto=? AND o.status_hub='finalizada'
+        AND DATE(e.finalizada_em,'-3 hours')=?
+    """, (ixc_tecnico_id, 227, hoje)).fetchall()
+
+    for os_row in os_hoje:
+        mats = db_tec.execute("""
+            SELECT p.ixc_produto_id, p.nome, m.quantidade
+            FROM ht_os_materiais m
+            JOIN ht_produtos p ON p.id=m.id_produto
+            WHERE m.ixc_os_id=? AND m.id_tecnico=(SELECT id FROM ht_usuarios WHERE ixc_funcionario_id=?)
+        """, (os_row["ixc_os_id"], ixc_tecnico_id)).fetchall()
+        for m in mats:
+            pid = str(m["ixc_produto_id"])
+            if pid not in consumido:
+                consumido[pid] = {"nome": m["nome"], "qtd": 0}
+            consumido[pid]["qtd"] += float(m["quantidade"])
+    db_tec.close()
+
+    # Calcular sobras
+    sobras = []
+    for pid, info in requisitado.items():
+        qtd_req = info["qtd"]
+        qtd_con = consumido.get(pid, {}).get("qtd", 0)
+        sobra   = qtd_req - qtd_con
+        if sobra > 0.5:
+            sobras.append({"id_produto": pid, "nome": info["nome"],
+                          "requisitado": qtd_req, "consumido": qtd_con, "sobra": sobra})
+
+    if not sobras:
+        log.info(f"[{tecnico_nome}] Sem sobras hoje")
+        return
+
+    TELEGRAM_GRUPO = os.getenv("TELEGRAM_GRUPO","")
+    linhas = [f"📦 <b>DEVOLUÇÃO DE MATERIAL — {tecnico_nome}</b>",
+              f"Data: {hoje}\n",
+              f"Os itens abaixo devem ser devolvidos ao almoxarifado:\n"]
+    for s in sobras:
+        linhas.append(f"  • {s['nome'][:35]}")
+        linhas.append(f"    Req:{s['requisitado']:.0f} | Usado:{s['consumido']:.0f} | Sobra:{s['sobra']:.0f}")
+    linhas.append(f"\n🔔 {tecnico_nome}, devolva os itens ao almoxarife!")
+
+    msg = "\n".join(linhas)
+    enviar_telegram(msg, chat_id=TELEGRAM_AILTON)
+    if TELEGRAM_GRUPO:
+        enviar_telegram(msg, chat_id=TELEGRAM_GRUPO)
+    log.info(f"[{tecnico_nome}] Devolução notificada — {len(sobras)} itens")
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--tecnico-id",  type=int, required=True)
     parser.add_argument("--tecnico-nome", type=str, required=True)
     parser.add_argument("--almox-id",    type=int, required=True)
-    parser.add_argument("--ciclo",       choices=["auditoria","preparar","canceladas"], required=True)
+    parser.add_argument("--ciclo",       choices=["auditoria","preparar","canceladas","devolucao"], required=True)
     args = parser.parse_args()
 
     if args.ciclo == "auditoria":
         auditar_consumo(args.tecnico_id, args.tecnico_nome, args.almox_id)
+    elif args.ciclo == "canceladas":
+        verificar_os_canceladas(args.tecnico_id, args.tecnico_nome)
+    elif args.ciclo == "devolucao":
+        calcular_devolucao(args.tecnico_id, args.tecnico_nome, args.almox_id)
     else:
         preparar_dia_seguinte(args.tecnico_id, args.tecnico_nome, args.almox_id)
-
-# ── CICLO 07H — VERIFICAÇÃO OS CANCELADAS ────────────────────────────────────
 
 def verificar_os_canceladas(ixc_tecnico_id: int, tecnico_nome: str):
     """Verifica se OS agendadas para hoje foram canceladas após a requisição."""
@@ -518,3 +604,6 @@ def verificar_os_canceladas(ixc_tecnico_id: int, tecnico_nome: str):
 
     db_est.commit()
     db_est.close()
+
+# ── CICLO 19H — DEVOLUÇÃO DE SOBRAS ──────────────────────────────────────────
+
